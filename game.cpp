@@ -1,38 +1,22 @@
-
 #include "headers/game.hpp"
-
-void Game::Restart()
-{
-	StartGame();
-}
 
 void Game::Quit()
 {
-	exit(0);
+	Game::running = false;
+	return;
 }
 
-void Game::PrintIntro()
+bool Game::AskToPlay()
 {
 	std::cout << "Would you like to play a game of TickTackToe?" << std::endl;
 	std::cout << "Yes / No: (y/n)" << std::endl;
-	char answer = '\0';
-	bool answering = true;
-	while (answering)
+	if(GetYesNo())
 	{
-		answer = (char)tolower(std::cin.get());
-		if (answer == 'y') 
-		{
-			answering = false;
-			system("CLS");
-		}
-		else if (answer == 'n') 
-		{
-			answering = false;
-			Quit();
-		}
-		else {
-			std::cout << "Yes / No: (y/n)" << std::endl;
-		}
+		return true;
+	}
+	else 
+	{
+		return false;
 	}
 }
 
@@ -40,12 +24,8 @@ void Game::PrintWin()
 {
 	system("cls");
 	std::cout << board->GetWinner() << " has won this game!" << std::endl;
-	system("pause");
 }
 
-void Game::PrintLose()
-{
-}
 
 void Game::DoMove()
 {
@@ -92,11 +72,12 @@ void Game::DoMove()
 
 void Game::StartGame()
 {
+	if (!AskToPlay()) return;
 	currentPlayer = GetNextPlayer();
-	PrintIntro();
 	PickPlayerSymbol();
 	PrintGameInstructions();
 	board->PrintGameboard();
+
 	while (Game::running) 
 	{
 		if (!Game::won) 
@@ -108,8 +89,24 @@ void Game::StartGame()
 				PrintWin();
 			}
 		}
+		// game is won
+		else 
+		{
+			// ask for restart
+			std::cout << "Restart game?" << std::endl;
+			if (GetYesNo()) 
+			{
+				Game::restart = true;
+				Game::running = false;
+				system("cls");
+			}
+			else 
+			{
+				// exit loop
+				Game::running = false;
+			}
+		}
 	}
-	system("pause");
 }
 
 void Game::PickPlayerSymbol()
@@ -154,6 +151,31 @@ char* Game::GetNextPlayer()
 	return &player1;
 }
 
+// returns false if no and true if yes
+bool Game::GetYesNo()
+{
+	char answer = '\0';
+	bool answering = true;
+	while (answering)
+	{
+		answer = (char)tolower(std::cin.get());
+		if (answer == 'y')
+		{
+			answering = false;
+			return true;
+		}
+		else if (answer == 'n')
+		{
+			answering = false;
+			return false;
+		}
+		else {
+			std::cout << "Yes / No: (y/n)" << std::endl;
+		}
+	}
+	return false;
+}
+
 Game::Game(int size)
 {
 	board = new Gameboard(size);
@@ -161,14 +183,7 @@ Game::Game(int size)
 
 Game::~Game()
 {
+	std::cout << "cleaning up gameboard class" <<  std::endl;
 	delete board;
 }
 
-int main()
-{
-	Game* g = new Game(3);
-	g->StartGame();
-	std::cin.get();
-	delete g;
-	return 0;
-}

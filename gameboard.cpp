@@ -1,6 +1,5 @@
 #include "headers/gameboard.hpp"
 
-
 bool Gameboard::PlaceOnCell(int row, char col, char player)
 {
 	int column = 0;
@@ -149,4 +148,5 @@ Gameboard::~Gameboard()
 		delete[] board[i];
 	}
 	delete[] board;
+	std::cout << "cleaning up gameboard array" << std::endl;
 }

@@ -1,6 +1,4 @@
-
 #include "Gameboard.hpp"
-
 class Game {
 
     private:
@@ -10,16 +8,16 @@ class Game {
 	char player1, player2;
 	Gameboard* board;
     public:
+	bool restart = false;
 		Game(int size);
 		~Game();
-    void Restart();
     void Quit();
-    void PrintIntro();
 	void PrintWin();
-	void PrintLose();
     void DoMove();
 	void StartGame();
 	void PickPlayerSymbol();
 	void PrintGameInstructions();
 	char* GetNextPlayer();
+	bool AskToPlay();
+	bool GetYesNo();
 };
