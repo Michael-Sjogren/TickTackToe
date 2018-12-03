@@ -27,17 +27,17 @@ void Gameboard::PrintGameboard()
 	int i = 0;
 	for (char c : alphabet) 
 	{
-		if (i >= Gameboard::BOARD_SIZE) break;
+		if (i >= board_size) break;
 		std::cout << " " << (char)toupper(c) << " ";
 		i++;
 	}
 	std::cout << std::endl;
-	for (int row = 1; row <= Gameboard::BOARD_SIZE; row++)
+	for (int row = 1; row <=board_size; row++)
 	{
-		for (int col = 1; col <= Gameboard::BOARD_SIZE; col++)
+		for (int col = 1; col <= board_size; col++)
 		{
 
-			if (col % BOARD_SIZE == 0) 
+			if (col % board_size == 0)
 			{
 				std::cout << "[" << board[row-1][col-1] << "] " << row << std::endl;
 			}
@@ -56,8 +56,8 @@ char * Gameboard::GetWinner()
 
 char* Gameboard::GetCellOnBoard(int row, int col)
 {
-	if (row >= Gameboard::BOARD_SIZE || row < 0) return __nullptr;
-	if (col >= Gameboard::BOARD_SIZE || col < 0) return __nullptr;
+	if (row >= board_size || row < 0) return __nullptr;
+	if (col >= board_size || col < 0) return __nullptr;
 	return &board[row][col];
 }
 
@@ -71,10 +71,10 @@ bool Gameboard::CheckIfInARow()
 	// there are nine potential directions
 	std::string debugString = "";
 	bool tied = true;
-	for (size_t j = 0; j < BOARD_SIZE*BOARD_SIZE; j++)
+	for (size_t j = 0; j < board_size*board_size; j++)
 	{
-		int col = j % BOARD_SIZE;
-		int row = j / BOARD_SIZE;
+		int col = j % board_size;
+		int row = j / board_size;
 		char* startCell = GetCellOnBoard(row , col);
 		if (startCell == nullptr) continue;
 		if (*startCell == '\0') 
@@ -94,7 +94,7 @@ bool Gameboard::CheckIfInARow()
 			int index = 1;
 			int rowCount = 1;
 			// getting the next cell in the current direction 
-			while (index <= Gameboard::WIN_ROW_COUNT)
+			while (index <= win_row_count)
 			{
 				char* c = GetCellOnBoard(row + (y_dir*index), col + (x_dir * index));
 				if (c == nullptr) break;
@@ -107,10 +107,9 @@ bool Gameboard::CheckIfInARow()
 				{
 					break;
 				}
-				
 			}
 
-			if (rowCount >= Gameboard::WIN_ROW_COUNT)
+			if (rowCount >= win_row_count)
 			{
 				the_winner = startCell;
 				return true;
@@ -124,4 +123,30 @@ bool Gameboard::CheckIfInARow()
 	}
 
 	return false;
+}
+
+Gameboard::Gameboard(int size)
+{
+	board = new char*[size];
+	for (size_t i = 0; i < size; i++)
+	{
+		board[i] = new char[size];
+	}
+	for (size_t i = 0; i < size*size; i++)
+	{
+		int col = i % size;
+		int row = i / size;
+		board[row][col] = '\0';
+	}
+	board_size = size;
+	win_row_count = size;
+}
+
+Gameboard::~Gameboard()
+{
+	for (size_t i = 0; i < Gameboard::board_size; i++)
+	{
+		delete[] board[i];
+	}
+	delete[] board;
 }

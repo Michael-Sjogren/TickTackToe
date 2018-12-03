@@ -4,18 +4,14 @@
 class Game {
 
     private:
-    bool won;
-	bool running;
+    bool won = false;
+	bool running = true;
 	char* currentPlayer;
 	char player1, player2;
-	Gameboard board;
+	Gameboard* board;
     public:
-	Game::Game() 
-	{
-		won = false;
-		running = true;
-		board = Gameboard();
-	}
+		Game(int size);
+		~Game();
     void Restart();
     void Quit();
     void PrintIntro();
