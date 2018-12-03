@@ -16,6 +16,7 @@ public:
 	void PrintGameboard();
 	char GetWinner();
 	bool CheckIfInARow();
+	bool isTied = true;
 
 	Gameboard(int size);
 	Gameboard() = default;

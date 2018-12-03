@@ -9,15 +9,7 @@ void Game::Quit()
 bool Game::AskToPlay()
 {
 	std::cout << "Would you like to play a game of TickTackToe?" << std::endl;
-	std::cout << "Yes / No: (y/n)" << std::endl;
-	if(GetYesNo())
-	{
-		return true;
-	}
-	else 
-	{
-		return false;
-	}
+	return GetYesNo();
 }
 
 void Game::PrintWin()
@@ -88,6 +80,13 @@ void Game::StartGame()
 				Game::won = true;
 				PrintWin();
 			}
+			else 
+
+			if (board->isTied) 
+			{
+				Game::won = false;
+			}
+
 		}
 		// game is won
 		else 
@@ -156,6 +155,7 @@ bool Game::GetYesNo()
 {
 	char answer = '\0';
 	bool answering = true;
+	std::cout << "Yes / No: (y/n)" << std::endl;
 	while (answering)
 	{
 		answer = (char)tolower(std::cin.get());
@@ -170,6 +170,7 @@ bool Game::GetYesNo()
 			return false;
 		}
 		else {
+			system("cls");
 			std::cout << "Yes / No: (y/n)" << std::endl;
 		}
 	}

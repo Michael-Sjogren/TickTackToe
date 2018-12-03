@@ -13,7 +13,7 @@ int main()
 
 void Start()
 {
-	currentGame = new Game(3);
+	currentGame = new Game(4);
 	currentGame->StartGame();
 	if (currentGame->restart)
 	{

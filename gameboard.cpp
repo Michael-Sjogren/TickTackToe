@@ -118,7 +118,8 @@ bool Gameboard::CheckIfInARow()
 	if (tied) 
 	{
 		std::cout << "Game is tied" << std::endl;
-		system("pause");
+		isTied = true;
+		return false;
 	}
 
 	return false;
