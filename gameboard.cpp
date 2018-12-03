@@ -49,7 +49,7 @@ void Gameboard::PrintGameboard()
 	}
 }
 
-char * Gameboard::GetWinner()
+char Gameboard::GetWinner()
 {
 	return the_winner;
 }
@@ -111,7 +111,7 @@ bool Gameboard::CheckIfInARow()
 
 			if (rowCount >= win_row_count)
 			{
-				the_winner = startCell;
+				the_winner = *startCell;
 				return true;
 			}
 		}

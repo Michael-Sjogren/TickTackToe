@@ -38,7 +38,9 @@ void Game::PrintIntro()
 
 void Game::PrintWin()
 {
+	system("cls");
 	std::cout << board->GetWinner() << " has won this game!" << std::endl;
+	system("pause");
 }
 
 void Game::PrintLose()
@@ -103,6 +105,7 @@ void Game::StartGame()
 			if (board->CheckIfInARow()) 
 			{
 				Game::won = true;
+				PrintWin();
 			}
 		}
 	}

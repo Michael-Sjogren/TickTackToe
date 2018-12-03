@@ -14,7 +14,7 @@ public:
 	std::string alphabet = "abcdefghijklmnopqrstuvwxyz";
 	bool PlaceOnCell(int, char, char player);
 	void PrintGameboard();
-	char* GetWinner();
+	char GetWinner();
 	bool CheckIfInARow();
 
 	Gameboard(int size);
@@ -23,5 +23,5 @@ public:
 private:
 	// holds either X or O or '\0' as free slot
 	char** board;
-	char* the_winner = nullptr;
+	char the_winner = '\0';
 };
